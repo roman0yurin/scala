@@ -107,9 +107,8 @@ trait FlatHashTable[A] extends FlatHashTable.HashUtils[A] {
     iterator.foreach(out.writeObject)
   }
 
-  /** Finds an entry in the hash table if such an element exists. */
-  @deprecatedOverriding("Internal implementation does not admit sensible overriding of this method.", "2.11.0")
-  protected def findEntry(elem: A): Option[A] =
+  /** Найти тождественный элемент */
+  def findEntry(elem: A): Option[A] =
     findElemImpl(elem) match {
       case null => None
       case entry => Some(entryToElem(entry))
