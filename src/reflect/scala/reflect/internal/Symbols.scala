@@ -1970,6 +1970,18 @@ trait Symbols extends api.Symbols { self: SymbolTable =>
       result
     }
 
+    /**Возвращает только уникальный для данного условия символ, обход бага
+    * с обнаруженим двойного (переопределенного) мнимого объекта компаньона для вложенного класса.
+    * (баг возникает в ООП верстке при построении scala типов в runtime)
+    */
+    def uniqOnly(cond: Symbol => Boolean): Symbol = {
+      val result = filter(cond)
+      if(!result.isOverloaded)
+        result
+      else
+        NoSymbol
+    }
+
 // ------ cloning -------------------------------------------------------------------
 
     /** A clone of this symbol. */
@@ -3282,7 +3294,7 @@ trait Symbols extends api.Symbols { self: SymbolTable =>
      *  returned, otherwise, `NoSymbol` is returned.
      */
     protected final def companionModule0: Symbol =
-      flatOwnerInfo.decl(name.toTermName).suchThat(sym => sym.isModule && (sym isCoDefinedWith this))
+      flatOwnerInfo.decl(name.toTermName).uniqOnly(sym => sym.isModule && (sym isCoDefinedWith this))//TODO некорректное чтение структуры вложенных классов приводит к появлению мнимых переопределенных объектов - компаньонов.
 
     override def companionModule    = companionModule0
     override def companionSymbol    = companionModule0
