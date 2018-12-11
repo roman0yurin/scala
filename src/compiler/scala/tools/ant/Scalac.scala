@@ -634,7 +634,7 @@ class Scalac extends ScalaMatchingTask with ScalacShared {
       val java = new Java(this)
       java setFork true
       // using 'setLine' creates multiple arguments out of a space-separated string
-      jvmArgs foreach { java.createJvmarg() setLine _ }
+      settings.jvmargs.value map (_ substring 2) foreach { java.createJvmarg() setLine _ }
 
       // use user-provided path or retrieve from classloader
       // TODO - Allow user to override the compiler classpath
@@ -653,7 +653,11 @@ class Scalac extends ScalaMatchingTask with ScalacShared {
 
       // Write all settings to a temporary file
       def writeSettings(): File = {
-        def escapeArgument(arg : String) = if (arg matches ".*\\s.*") '"' + arg + '"' else arg
+        def escapeArgument(arg : String) =
+          if (arg startsWith("-J"))
+            ""
+          else if (arg matches ".*\\s.*") '"' + arg + '"'
+          else arg
         val file = File.createTempFile("scalac-ant-",".args")
         file.deleteOnExit()
         val out = new PrintWriter(new BufferedWriter(new FileWriter(file)))
