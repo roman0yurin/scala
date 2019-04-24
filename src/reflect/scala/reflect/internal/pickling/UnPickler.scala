@@ -181,7 +181,8 @@ abstract class UnPickler {
         val savedIndex = readIndex
         readIndex = index(i)
         r = op()
-        assert(entries(i) eq null, entries(i))
+        if(entries(i)  != null) //Такое иногда происходит при инкрементальной компиляции
+          System.err.println("Произошло рекурсивное чтение символа " + entries(i) + " (проблема при компиляции)")
         entries(i) = r
         readIndex = savedIndex
       }
@@ -635,7 +636,8 @@ abstract class UnPickler {
         val savedIndex = readIndex
         readIndex = index(i)
         r = readSymbol()
-        assert(entries(i) eq null, entries(i))
+        if(entries(i)  != null) //Такое иногда происходит при инкрементальной компиляции
+          System.err.println("Произошло рекурсивное чтение символа " + entries(i) + " (проблема при компиляции)")
         entries(i) = r
         readIndex = savedIndex
       }
