@@ -2109,7 +2109,7 @@ trait Typers extends Adaptations with Tags with TypersTracking with PatternTyper
 
       // associate superclass paramaccessors with their aliases
       val (superConstr, superArgs) = decompose(rhs)
-      if (superConstr.symbol.isPrimaryConstructor) {
+      if (superConstr.symbol != null && superConstr.symbol.isPrimaryConstructor) { //во время обработки ошибки в коде символ конструктора может быть null
         val superClazz = superConstr.symbol.owner
         if (!superClazz.isJavaDefined) {
           val superParamAccessors = superClazz.constrParamAccessors
