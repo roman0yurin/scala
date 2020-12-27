@@ -1,6 +1,8 @@
 package scala.tools
 package reflect
 
+import scala.reflect.internal.util.SourceFile
+
 trait ToolBox[U <: scala.reflect.api.Universe] {
 
   /** Underlying universe of a ToolBox
@@ -129,6 +131,16 @@ trait ToolBox[U <: scala.reflect.api.Universe] {
    *  Is equivalent to `compile(tree)()`.
    */
   def eval(tree: u.Tree): Any
+
+  /**
+ * Скомпилировать набор исходников (файлов), с добавлением получившихся классов в ClassLoader
+ */
+  def compileSources(sourceFiles: List[String])
+
+  /**
+ * Загрузчик классов, используемый данный компилятором, учитывает классы добавленные компилятором
+ */
+  def compilerClassLoader:ClassLoader
 }
 
 /** Represents an error during toolboxing

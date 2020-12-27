@@ -318,8 +318,18 @@ abstract class ToolBoxFactory[U <: JavaUniverse](val u: U) { factorySelf =>
       // reporter doesn't accumulate errors, but the front-end does
       def throwIfErrors() = {
         if (frontEnd.hasErrors) throw ToolBoxError(
-          "reflective compilation has failed:" + EOL + EOL + (frontEnd.infos map (_.msg) mkString EOL)
+          "reflective compilation has failed:" + EOL + EOL + (frontEnd.infos map {info ⇒info.severity + " " + info.pos.showError(info.msg)} mkString EOL)
         )
+      }
+
+      /**
+       * Скомпилировать набор исходников (файлов), с добавлением получившихся классов в ClassLoader
+       */
+      def compileSources (sourceFiles: List[String]): Unit = {
+        val run = new Run
+        reporter.reset()
+        run.compile(sourceFiles)
+        throwIfErrors()
       }
     }
 
@@ -446,5 +456,18 @@ abstract class ToolBoxFactory[U <: JavaUniverse](val u: U) { factorySelf =>
     }
 
     def eval(tree: u.Tree): Any = compile(tree)()
+
+    /**
+     * Скомпилировать набор исходников (файлов), с добавлением получившихся классов в ClassLoader
+     */
+    override def compileSources (sourceFiles: List[String]): Unit = withCompilerApi { compilerApi =>
+      import compilerApi._
+      compiler.compileSources(sourceFiles)
+    }
+
+    /**
+     * Загрузчик классов, используемый данный компилятором, учитывает классы добавленные компилятором
+     */
+    override def compilerClassLoader: ClassLoader = classLoader
   }
 }
