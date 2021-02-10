@@ -2,6 +2,7 @@ package scala.reflect.quasiquotes
 
 import org.scalacheck._, Prop._, Gen._, Arbitrary._
 import scala.reflect.runtime.universe._, Flag._
+import scala.xml
 
 object LiftableProps extends QuasiquoteProperties("liftable") {
   property("unquote byte") = test {

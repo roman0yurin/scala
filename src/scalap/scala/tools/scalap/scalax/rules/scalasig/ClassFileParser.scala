@@ -6,6 +6,7 @@ package scalasig
 import language.postfixOps
 
 import java.io.IOException
+import scala.io
 
 object ByteCode {
   def apply(bytes: Array[Byte]) = new ByteCode(bytes, 0, bytes.length)
