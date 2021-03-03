@@ -40,13 +40,13 @@ class TraversableLikeTest {
 
       def mkFrench = () => {
         // For non-French speakers, this means "strange class name"
-        class ÉtrangeNomDeClasse extends FakeIndexedSeq[Int]
-        new ÉtrangeNomDeClasse
+        class EtrangeNomDeClasse extends FakeIndexedSeq[Int]
+        new EtrangeNomDeClasse
       }
 
       def mkFrenchLowercase = () => {
-        class étrangeNomDeClasseMinuscules extends FakeIndexedSeq[Int]
-        new étrangeNomDeClasseMinuscules
+        class etrangeNomDeClasseMinuscules extends FakeIndexedSeq[Int]
+        new etrangeNomDeClasseMinuscules
       }
     }
 
