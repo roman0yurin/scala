@@ -4,7 +4,8 @@ import scala.tools.testing.AssertUtil._
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.junit.Test
-import org.junit.Assert._
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import scala.tools.nsc.symtab.SymbolTableForUnitTesting
 
 @RunWith(classOf[JUnit4])

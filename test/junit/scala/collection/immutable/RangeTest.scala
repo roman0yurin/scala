@@ -7,7 +7,7 @@ import scala.tools.testing.AssertUtil
 
 @RunWith(classOf[JUnit4])
 class RangeTest {
-  import Assert._
+  import Assert.assertEquals
   import AssertUtil._
 
   @Test

@@ -1,7 +1,7 @@
 package scala.tools.nsc
 package symtab
 
-import org.junit.Assert._
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4

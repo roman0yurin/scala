@@ -3,7 +3,8 @@ package scala.collection.mutable
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.junit.Test
-import org.junit.Assert._
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 
 import scala.tools.testing.AssertUtil._
 
